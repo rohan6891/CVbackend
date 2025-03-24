@@ -5,7 +5,7 @@ motor
 pydantic
 bcrypt
 PyJWT>=2.0
-python-multipart
+python-multipartana
 reportlab
 pandas
 python-docx
@@ -13,3 +13,6 @@ PyPDF2
 python-dotenv
 groq
 httpx
+google-generativeai
+latex
+python-multipart

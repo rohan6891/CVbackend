@@ -6,6 +6,8 @@ WORKDIR /app
 # Copy and install dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN apt update
+RUN apt install texlive-full
 
 # Copy the backend code
 COPY . .
