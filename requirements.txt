@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pymongo
+motor
+pydantic
+bcrypt
+PyJWT>=2.0
+python-multipart
+reportlab
+pandas
+python-docx
+PyPDF2
+python-dotenv
+groq
+httpx

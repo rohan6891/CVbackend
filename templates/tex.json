@@ -1,0 +1,44 @@
+{
+  "templates": [
+    {
+      "name": "Deedy Resume Reversed",
+      "fileName": "1.tex"
+    },
+    {
+      "name": "RenderCV sb2nov Theme",
+      "fileName": "2.tex"
+    },
+    {
+      "name": "RenderCV EngineeringResumes Theme",
+      "fileName": "3.tex"
+    },
+    {
+      "name": "Recreating Business Insider's CV of Marissa Mayer",
+      "fileName": "4.tex"
+    },
+    {
+      "name": "Simple Hipster CV",
+      "fileName": "5.tex"
+    },
+    {
+      "name": "Anti CV",
+      "fileName": "6.tex"
+    },
+    {
+      "name": "Yuan's Resume Template",
+      "fileName": "7.tex"
+    },
+    {
+      "name": "MTeck's Resume",
+      "fileName": "8.tex"
+    },
+    {
+      "name": "Clean Academic CV Template",
+      "fileName": "9.tex"
+    },
+    {
+      "name": "Academic CV Template",
+      "fileName": "10.tex"
+    }
+  ]
+}
