@@ -2,35 +2,28 @@ import subprocess
 import os
 import tempfile
 from pathlib import Path
+from io import BytesIO
 
 class LatexCompilationError(Exception):
     pass
 
-async def compile_latex_to_pdf(latex_code: str, output_filename: str) -> str:
+async def compile_latex_to_pdf(latex_code: str) -> bytes:
     """
-    Compiles LaTeX code to PDF and returns the path to the generated PDF file.
+    Compiles LaTeX code to PDF and returns the PDF file as bytes.
     """
-    # Create output directory if it doesn't exist
-    output_dir = Path("generated_pdfs")
-    output_dir.mkdir(exist_ok=True)
-    
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        tex_file = os.path.join(tmpdirname, 'resume.tex')
-        with open(tex_file, 'w') as f:
-            f.write(latex_code)
-        
-        # Run pdflatex command
-        result = subprocess.run(
-            ['pdflatex', '-interaction=nonstopmode', '-output-directory', tmpdirname, tex_file],
-            capture_output=True,
-            text=True
-        )
-        
-        pdf_file = os.path.join(tmpdirname, 'resume.pdf')
-        if os.path.exists(pdf_file):
-            output_path = output_dir / output_filename
-            os.replace(pdf_file, output_path)
-            return str(output_path)
-        else:
-            error_msg = f"Compilation error: {result.stdout}\n{result.stderr}"
-            raise LatexCompilationError(error_msg)
+    # Write LaTeX code to a temporary .tex file
+    with open("temp.tex", "w") as f:
+        f.write(latex_code)
+
+    # Compile the .tex file to PDF
+    subprocess.run(["pdflatex", "temp.tex"], check=True)
+
+    # Read the generated PDF file
+    with open("temp.pdf", "rb") as f:
+        pdf_bytes = f.read()
+
+    # Clean up temporary files
+    os.remove("temp.tex")
+    os.remove("temp.pdf")
+
+    return pdf_bytes

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import StreamingResponse
 from typing import List, Optional
 import json
 from services.Parser import parse_job_description, parse_resume
@@ -8,6 +8,7 @@ import os
 from services.LatexCompiler import compile_latex_to_pdf  # Import the compiler service
 import uuid
 from services.ATS import calculate_matching_score
+from io import BytesIO
 
 router = APIRouter()
 
@@ -50,23 +51,23 @@ async def enhance_resume(
             additional_info=additional_info
         )
 
-        # Compile LaTeX to PDF
+        # Compile LaTeX to PDF in memory
         try:
-            pdf_path = await compile_latex_to_pdf(
-                result["latex_code"],
-                f"resume_{uuid.uuid4()}.pdf"
-            )
+            pdf_bytes = await compile_latex_to_pdf(result["latex_code"])
         except Exception as e:
             raise HTTPException(
                 status_code=500,
                 detail=f"PDF compilation failed: {str(e)}"
             )
 
-        # Return the generated PDF
-        return FileResponse(
-            pdf_path,
+        # Create a BytesIO stream from the PDF bytes
+        pdf_stream = BytesIO(pdf_bytes)
+
+        # Return the generated PDF as a streaming response
+        return StreamingResponse(
+            pdf_stream,
             media_type="application/pdf",
-            filename="enhanced_resume.pdf"
+            headers={"Content-Disposition": "attachment; filename=enhanced_resume.pdf"}
         )
 
     except Exception as e:
@@ -77,7 +78,6 @@ async def ats_analysis(
     file: UploadFile = File(...),
     job_description: str = Form(...)
 ):
-    
     print("In the ATS route")
     try:
         # Parse the current resume

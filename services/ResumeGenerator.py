@@ -82,7 +82,7 @@ async def generate_enhanced_resume(
     # Check if the response is empty
     if not response_text:
         raise ValueError("Empty response from AI model.")
-
+    print(response_text)
     try:
         response_dict = json.loads(response_text)
         latex_code = response_dict["latex_code"]
