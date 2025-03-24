@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 from fastapi.responses import FileResponse
-from typing import List
+from typing import List, Optional
 import json
 from services.Parser import parse_job_description, parse_resume
 from services.ResumeGenerator import generate_enhanced_resume
@@ -15,7 +15,7 @@ router = APIRouter()
 async def enhance_resume(
     file: UploadFile = File(...),
     job_description: str = Form(...),
-    template_name: str = Form(...),
+    template_name: Optional[str] = Form(None),  # Make template_name optional
     additional_info: str = Form(...)
 ):
     try:
@@ -34,10 +34,13 @@ async def enhance_resume(
             )
 
         # Find matching template file or use default
-        template_file = next(
-            (t["fileName"] for t in templates if t["name"] == template_name),
-            "1.tex"  # Default to first template if no match found
-        )
+        if template_name:
+            template_file = next(
+                (t["fileName"] for t in templates if t["name"] == template_name),
+                templates[0]["fileName"]  # Default to first template if no match found
+            )
+        else:
+            template_file = templates[0]["fileName"]  # Default to first template if no template_name provided
 
         # Generate enhanced resume with LaTeX
         result = await generate_enhanced_resume(
