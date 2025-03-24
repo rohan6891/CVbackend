@@ -4,7 +4,9 @@ import os
 import json
 from typing import Dict, Any, Optional
 from fastapi import Form
+from dotenv import load_dotenv
 
+load_dotenv()
 # Set Google Application Credentials
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
