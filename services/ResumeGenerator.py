@@ -10,6 +10,8 @@ load_dotenv()
 # Set Google Application Credentials
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
+print(os.environ["GOOGLE_APPLICATION_CREDENTIALS"]) 
+
 # Initialize AI Model
 model = genai.GenerativeModel(
     model_name="gemini-1.5-pro-002",
