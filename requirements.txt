@@ -5,7 +5,6 @@ motor
 pydantic
 bcrypt
 PyJWT>=2.0
-python-multipartana
 reportlab
 pandas
 python-docx
