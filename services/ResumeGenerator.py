@@ -7,8 +7,18 @@ from fastapi import Form
 from dotenv import load_dotenv
 
 load_dotenv()
+
 # Set Google Application Credentials
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+if not credentials_json:
+    raise RuntimeError("GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable is not set")
+
+# Write the credentials JSON to a temporary file
+credentials_path = "google_credentials.json"
+with open(credentials_path, "w") as f:
+    f.write(credentials_json)
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
 
 print(os.environ["GOOGLE_APPLICATION_CREDENTIALS"]) 
 
@@ -28,13 +38,11 @@ async def generate_enhanced_resume(
     job_description: Optional[str] = Form(None),
     additional_info: str = ""
 ) -> Dict[str, str]:
-
     print("in generate_enhanced_resume")
     print(parsed_resume)
     print(job_description)
     print(template_file)
     print(additional_info)
-
 
     with open(f"templates/{template_file}", "r") as f:
         template_content = f.read()
