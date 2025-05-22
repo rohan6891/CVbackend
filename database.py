@@ -6,7 +6,7 @@ load_dotenv()
 DB_NAME = "CVcraft"
 
 # Construct MongoDB URI using environment variables
-MONGO_URI = "mongodb+srv://Rohan:Rohan1234@learningcluster.nzkdrcs.mongodb.net/?retryWrites=true&w=majority&appName=LearningCluster"
+MONGO_URI = "mongodb+srv://Rohan:Rohan123@learningcluster.nzkdrcs.mongodb.net/?retryWrites=true&w=majority&appName=LearningCluster"
 
 # Initialize MongoDB client
 client = AsyncIOMotorClient(MONGO_URI)
