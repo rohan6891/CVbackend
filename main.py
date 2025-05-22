@@ -16,7 +16,7 @@ app = FastAPI()
 load_dotenv()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://cvbuilderio.vercel.app"],  # Explicitly allow your frontend
+    allow_origins=["*"],  # Explicitly allow your frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
