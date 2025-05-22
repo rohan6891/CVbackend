@@ -7,7 +7,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 RUN apt update -y
-RUN apt install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+RUN apt install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended -y
 
 # Copy the backend code
 COPY . .
